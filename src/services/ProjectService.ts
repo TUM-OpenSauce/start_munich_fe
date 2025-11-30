@@ -1,8 +1,5 @@
 import { ApiClient, type Project, type ProjectDTO } from "./ApiService";
 
-// Mock function to simulate an API request delay
-const mockApiDelay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
 export class ProjectService {
 
     async getProjects(): Promise<Project[]> {

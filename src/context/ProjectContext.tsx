@@ -8,7 +8,6 @@ import type { UserProfile } from '../services/UserService';
 // NEW IMPORTS
 import { VendorService } from '../services/VendorService';
 import type { Project, Vendor } from '../services/ApiService';
-import { Place } from '@mui/icons-material';
 
 
 interface ProjectContextType {
@@ -126,15 +125,6 @@ export const ProjectProvider: React.FC<{ children: ReactNode }> = ({ children })
       setIsVendorLoading(false);
     }
   }, []); // vendorService is stable
-
-  const addProjectVendor = useCallback(async (vendorData: Omit<Vendor, 'id'>) => {
-    try {
-      const newVendor = await vendorService.addVendor(vendorData);
-      setCurrentProjectVendors(prev => [...prev, newVendor]);
-    } catch (error) {
-      console.error("Error adding vendor:", error);
-    }
-  }, []);
 
   const updateProjectVendor = useCallback(async (vendor: Vendor) => {
     try {
