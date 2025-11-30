@@ -15,7 +15,7 @@ const firebaseConfig = {
   projectId: "opensauce-6bef9",
   storageBucket: "opensauce-6bef9.firebasestorage.app",
   messagingSenderId: "625648332564",
-  // appId: "1:625648332564:web:5d9b08a13fa61f800b9c01",
+  // appId: "1:625648332564:web:5d9b08a13fa61f800b9c01", <- old
   appId: "1:625648332564:web:16cf3d7cd08f48780b9c01",
   measurementId: "G-17VTRKR8ES"
 };
