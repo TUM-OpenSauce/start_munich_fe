@@ -78,33 +78,33 @@ return (
         <Toolbar sx={{ justifyContent: 'space-between', height: '100%', px: 3 }}>
             {/* Brand */}
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                <Box 
-                    sx={{ 
-                        width: 36, 
-                        height: 36, 
-                        borderRadius: 2, 
-                        background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <Typography sx={{ color: '#fff', fontWeight: 700, fontSize: 14 }}>OS</Typography>
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography 
+                        variant="h5" 
+                        noWrap 
+                        component="div" 
+                        sx={{ 
+                            color: '#1e293b', 
+                            fontWeight: 800, 
+                            letterSpacing: '-0.03em',
+                            lineHeight: 1,
+                            fontSize: 22
+                        }}
+                    >
+                        4CASTER
+                    </Typography>
+                    <Typography 
+                        variant="caption" 
+                        sx={{ 
+                            color: '#94a3b8', 
+                            fontWeight: 500, 
+                            fontSize: 10,
+                            letterSpacing: '0.02em'
+                        }}
+                    >
+                        by OPENSAUCE
+                    </Typography>
                 </Box>
-                <Typography 
-                    variant="h6" 
-                    noWrap 
-                    component="div" 
-                    sx={{ 
-                        color: '#1e293b', 
-                        fontWeight: 700, 
-                        letterSpacing: '-0.02em',
-                        transition: 'opacity 0.3s',
-                        display: { xs: 'none', sm: 'block' }
-                    }}
-                >
-                    {isCollapsed ? '' : 'OpenSauce'}
-                </Typography>
             </Box>
 
             {/* Right Side: Notifications and Account */}

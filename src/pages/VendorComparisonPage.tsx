@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link as RouterLink } from 'react-router-dom';
-import { VendorService } from '../services/VendorService';
+import { VendorService, type NegotiationMetadata, getCachedStatistics } from '../services/VendorService';
 import { 
     Box, Typography, CircularProgress, Card,
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow, 
@@ -8,7 +8,7 @@ import {
     FormGroup, FormControlLabel, Checkbox, IconButton, Collapse,
     useMediaQuery, useTheme, Tooltip, LinearProgress
 } from '@mui/material';
-import { ArrowBack, Compare, ViewColumn, TableRows, Settings, ExpandLess, TrendingUp, Warning, CheckCircle } from '@mui/icons-material';
+import { ArrowBack, Compare, ViewColumn, TableRows, Settings, ExpandLess, Warning, CheckCircle } from '@mui/icons-material';
 import type { Vendor } from '../services/ApiService';
 
 const vendorService = new VendorService();
@@ -44,6 +44,7 @@ const defaultColumns: ColumnConfig[] = [
 const VendorComparisonPage: React.FC = () => {
     const { project_id } = useParams<{ project_id: string }>();
     const [vendors, setVendors] = useState<Vendor[]>([]);
+    const [vendorStats, setVendorStats] = useState<Map<string, NegotiationMetadata>>(new Map());
     const [isLoading, setIsLoading] = useState(true);
     const [viewMode, setViewMode] = useState<'horizontal' | 'vertical'>('horizontal');
     const [columns, setColumns] = useState<ColumnConfig[]>(defaultColumns);
@@ -66,6 +67,17 @@ const VendorComparisonPage: React.FC = () => {
             try {
                 const fetchedVendors = await vendorService.getVendorsByProjectId(project_id);
                 setVendors(fetchedVendors);
+                
+                // Load cached statistics for all vendors
+                const statsMap = new Map<string, NegotiationMetadata>();
+                fetchedVendors.forEach(vendor => {
+                    const cached = getCachedStatistics(vendor.vendor_id);
+                    if (cached) {
+                        statsMap.set(vendor.vendor_id, cached);
+                    }
+                });
+                setVendorStats(statsMap);
+                console.log(`Loaded cached stats for ${statsMap.size}/${fetchedVendors.length} vendors`);
             } catch (error) {
                 console.error("Error fetching vendors for comparison:", error);
             } finally {
@@ -87,8 +99,16 @@ const VendorComparisonPage: React.FC = () => {
         ));
     };
     
-    const formatCurrency = (amount: number, currency: string = 'USD') => 
-        new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(amount);
+    const formatCurrency = (amount: number, currency: string = 'USD') => {
+        // Validate currency code - must be a valid 3-letter ISO 4217 code
+        const validCurrency = currency && currency.length === 3 && currency !== 'UNKNOWN' ? currency : 'USD';
+        try {
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: validCurrency }).format(amount);
+        } catch {
+            // Fallback if currency is still invalid
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+        }
+    };
 
     const getHealthColor = (score: number) => {
         if (score >= 80) return { bg: '#ecfdf5', color: '#059669', label: 'Excellent' };
@@ -102,6 +122,99 @@ const VendorComparisonPage: React.FC = () => {
         if (risk <= 40) return { bg: '#fef3c7', color: '#d97706' };
         if (risk <= 60) return { bg: '#fed7aa', color: '#ea580c' };
         return { bg: '#fecaca', color: '#dc2626' };
+    };
+
+    // Render cell value based on column key
+    const renderCellValue = (vendor: Vendor, colKey: string) => {
+        const stats = vendorStats.get(vendor.vendor_id);
+        
+        switch (colKey) {
+            case 'status':
+                return <Chip label="Active" size="small" sx={{ bgcolor: '#e0f2fe', color: '#0369a1', fontWeight: 600 }} />;
+            case 'rating':
+                return <Rating value={4} readOnly size="small" />;
+            case 'specialty':
+                return <Typography variant="body2" sx={{ color: '#64748b' }}>{vendor.company || '-'}</Typography>;
+            case 'estimatedCost':
+                return stats ? formatCurrency(stats.latestQuotedPrice, stats.currency) : '-';
+            case 'tasksCompleted':
+                return stats ? `${stats.messageCountBuyer + stats.messageCountSeller} msgs` : '-';
+            case 'dealHealth':
+                if (!stats) return <Chip label="No data" size="small" sx={{ bgcolor: '#f1f5f9', color: '#94a3b8' }} />;
+                const health = getHealthColor(stats.overallDealHealthScore);
+                return (
+                    <Tooltip title={`${stats.overallDealHealthScore}%`}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <LinearProgress 
+                                variant="determinate" 
+                                value={stats.overallDealHealthScore} 
+                                sx={{ width: 60, height: 6, borderRadius: 3, bgcolor: '#e2e8f0', '& .MuiLinearProgress-bar': { bgcolor: health.color } }} 
+                            />
+                            <Typography variant="caption" sx={{ color: health.color, fontWeight: 700 }}>{stats.overallDealHealthScore}%</Typography>
+                        </Box>
+                    </Tooltip>
+                );
+            case 'latestPrice':
+                return stats ? (
+                    <Typography variant="body2" sx={{ fontWeight: 600, color: '#1e293b' }}>
+                        {formatCurrency(stats.latestQuotedPrice, stats.currency)}
+                    </Typography>
+                ) : '-';
+            case 'discount':
+                return stats ? (
+                    <Chip 
+                        label={`${stats.latestDiscountPercentage}%`} 
+                        size="small" 
+                        sx={{ bgcolor: stats.latestDiscountPercentage > 10 ? '#dcfce7' : '#f1f5f9', color: stats.latestDiscountPercentage > 10 ? '#166534' : '#64748b', fontWeight: 600 }} 
+                    />
+                ) : '-';
+            case 'wiggleRoom':
+                return stats ? (
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <LinearProgress 
+                            variant="determinate" 
+                            value={stats.remainingWiggleRoom} 
+                            sx={{ width: 50, height: 6, borderRadius: 3, bgcolor: '#e2e8f0', '& .MuiLinearProgress-bar': { bgcolor: '#10b981' } }} 
+                        />
+                        <Typography variant="caption" sx={{ color: '#10b981', fontWeight: 700 }}>{stats.remainingWiggleRoom}%</Typography>
+                    </Box>
+                ) : '-';
+            case 'dealPhase':
+                return stats ? <Chip label={stats.dealPhase} size="small" sx={{ bgcolor: '#e0e7ff', color: '#4338ca', fontWeight: 500 }} /> : '-';
+            case 'buyerPower':
+                return stats ? (
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        {[...Array(10)].map((_, i) => (
+                            <Box key={i} sx={{ width: 6, height: 12, borderRadius: 0.5, bgcolor: i < stats.buyerPowerIndex ? '#3b82f6' : '#e2e8f0' }} />
+                        ))}
+                        <Typography variant="caption" sx={{ ml: 0.5, color: '#3b82f6', fontWeight: 700 }}>{stats.buyerPowerIndex}</Typography>
+                    </Box>
+                ) : '-';
+            case 'stalemateRisk':
+                if (!stats) return '-';
+                const risk = getRiskColor(stats.stalemateRiskProbability);
+                return (
+                    <Chip 
+                        icon={stats.stalemateRiskProbability > 50 ? <Warning sx={{ fontSize: 14 }} /> : <CheckCircle sx={{ fontSize: 14 }} />}
+                        label={`${stats.stalemateRiskProbability}%`} 
+                        size="small" 
+                        sx={{ bgcolor: risk.bg, color: risk.color, fontWeight: 600, '& .MuiChip-icon': { color: risk.color } }} 
+                    />
+                );
+            case 'sellerFloorHit':
+                return stats ? `${stats.sellerFloorHitProbability}%` : '-';
+            case 'urgency':
+                return stats ? (
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        {[...Array(10)].map((_, i) => (
+                            <Box key={i} sx={{ width: 6, height: 12, borderRadius: 0.5, bgcolor: i < stats.sellerUrgencyScore ? '#f59e0b' : '#e2e8f0' }} />
+                        ))}
+                        <Typography variant="caption" sx={{ ml: 0.5, color: '#f59e0b', fontWeight: 700 }}>{stats.sellerUrgencyScore}</Typography>
+                    </Box>
+                ) : '-';
+            default:
+                return '-';
+        }
     };
 
     const enabledColumns = columns.filter(col => col.enabled);
@@ -418,15 +531,21 @@ const VendorComparisonPage: React.FC = () => {
                                     }}
                                 >
                                     <TableCell sx={{ position: 'sticky', left: 0, backgroundColor: '#ffffff', zIndex: 1 }}>
-                                        <Typography sx={{ fontWeight: 600, color: '#1e293b' }}>
-                                            {vendor.name}
-                                        </Typography>
+                                        <Box>
+                                            <Typography sx={{ fontWeight: 600, color: '#1e293b' }}>
+                                                {vendor.name}
+                                            </Typography>
+                                            {!vendorStats.has(vendor.vendor_id) && (
+                                                <Typography variant="caption" sx={{ color: '#94a3b8' }}>No analysis yet</Typography>
+                                            )}
+                                        </Box>
                                     </TableCell>
                                     {enabledColumns.map(col => (
                                         <TableCell 
                                             key={col.key} 
                                             align={col.key === 'estimatedCost' || col.key === 'tasksCompleted' ? 'right' : 'center'}
-                                        >                                            
+                                        >
+                                            {renderCellValue(vendor, col.key)}
                                         </TableCell>
                                     ))}
                                 </TableRow>
@@ -500,6 +619,9 @@ const VendorComparisonPage: React.FC = () => {
                                             >
                                                 {vendor.name}
                                             </Typography>
+                                            {!vendorStats.has(vendor.vendor_id) && (
+                                                <Typography variant="caption" sx={{ color: '#94a3b8' }}>No analysis</Typography>
+                                            )}
                                         </Box>
                                     </TableCell>
                                 ))}
@@ -540,6 +662,9 @@ const VendorComparisonPage: React.FC = () => {
                                                 backgroundColor: index % 2 === 0 ? '#ffffff' : '#fafafa'
                                             }}
                                         >
+                                            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                {renderCellValue(vendor, col.key)}
+                                            </Box>
                                         </TableCell>
                                     ))}
                                 </TableRow>

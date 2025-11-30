@@ -38,18 +38,23 @@ const Sidebar: React.FC = () => {
     } = useProjects();
     const [isVendorsOpen, setIsVendorsOpen] = useState(true);
     
-    // Check if we are on a single project page
-    const params = useParams<{ project_id: string }>();
+    // Check if we are on a single project page or vendor page
+    const params = useParams<{ project_id: string; vendor_id: string }>();
     const currentProjectId = params.project_id;
+    const currentVendorId = params.vendor_id;
 
     // Effect to fetch vendors when the project ID in the URL changes
     useEffect(() => {
         if (currentProjectId) {
             fetchVendorsForProject(currentProjectId);
-            // Optionally auto-open the vendor list when navigating to a project
-            setIsVendorsOpen(true);
+            // Close vendor list when viewing a specific vendor, keep open otherwise
+            if (currentVendorId) {
+                setIsVendorsOpen(false);
+            } else {
+                setIsVendorsOpen(true);
+            }
         }
-    }, [currentProjectId, fetchVendorsForProject]);
+    }, [currentProjectId, currentVendorId, fetchVendorsForProject]);
     // --- End Vendor state ---
 
 
@@ -212,7 +217,7 @@ const Sidebar: React.FC = () => {
                     <List component="div" disablePadding sx={{ pl: 2 }}>
                         {isProjectsLoading ? (
                             <Box sx={{ display: 'flex', justifyContent: 'center', py: 2 }}>
-                                <CircularProgress size={18} sx={{ color: '#f59e0b' }} />
+                                <CircularProgress size={18} sx={{ color: '#64748b' }} />
                             </Box>
                         ) : projects.slice(0, 5).map((project) => ( 
                                 <ListItemButton
@@ -226,15 +231,15 @@ const Sidebar: React.FC = () => {
                                         borderRadius: 1.5,
                                         transition: 'all 0.2s ease',
                                         '&.active': { 
-                                            backgroundColor: '#fef3c7',
-                                            borderLeft: '3px solid #f59e0b',
-                                            '& .MuiTypography-root': { color: '#b45309', fontWeight: 600 },
-                                            '& .MuiListItemIcon-root': { color: '#f59e0b' }
+                                            backgroundColor: '#f1f5f9',
+                                            borderLeft: '3px solid #475569',
+                                            '& .MuiTypography-root': { color: '#1e293b', fontWeight: 600 },
+                                            '& .MuiListItemIcon-root': { color: '#475569' }
                                         },
                                         '&:hover': { 
-                                            backgroundColor: '#fffbeb',
-                                            '& .MuiTypography-root': { color: '#b45309' },
-                                            '& .MuiListItemIcon-root': { color: '#f59e0b' }
+                                            backgroundColor: '#f8fafc',
+                                            '& .MuiTypography-root': { color: '#334155' },
+                                            '& .MuiListItemIcon-root': { color: '#64748b' }
                                         },
                                     }}
                                 >
@@ -264,7 +269,7 @@ const Sidebar: React.FC = () => {
                                     primaryTypographyProps={{ 
                                         fontSize: 12, 
                                         fontWeight: 500,
-                                        color: '#f97316'
+                                        color: '#64748b'
                                     }}
                                 />
                             </ListItemButton>
@@ -305,7 +310,7 @@ const Sidebar: React.FC = () => {
                             justifyContent: isCollapsed ? 'center' : 'flex-start',
                             px: isCollapsed ? 0 : 2,
                             '&.active': { 
-                                backgroundColor: '#059669',
+                                backgroundColor: '#1e293b',
                                 color: '#ffffff',
                                 '& .MuiListItemIcon-root': { color: '#ffffff' },
                             },
@@ -335,7 +340,7 @@ const Sidebar: React.FC = () => {
                         <List component="div" disablePadding sx={{ pl: 2 }}>
                             {isVendorLoading ? (
                                 <Box sx={{ display: 'flex', justifyContent: 'center', py: 2 }}>
-                                    <CircularProgress size={18} sx={{ color: '#059669' }} />
+                                    <CircularProgress size={18} sx={{ color: '#64748b' }} />
                                 </Box>
                             ) : currentProjectVendors.length === 0 ? (
                                 <Typography 
@@ -363,15 +368,15 @@ const Sidebar: React.FC = () => {
                                             borderRadius: 1.5,
                                             transition: 'all 0.2s ease',
                                             '&.active': { 
-                                                backgroundColor: '#ecfdf5',
-                                                borderLeft: '3px solid #059669',
-                                                '& .MuiTypography-root': { color: '#059669', fontWeight: 600 },
-                                                '& .MuiListItemIcon-root': { color: '#059669' }
+                                                backgroundColor: '#f1f5f9',
+                                                borderLeft: '3px solid #475569',
+                                                '& .MuiTypography-root': { color: '#1e293b', fontWeight: 600 },
+                                                '& .MuiListItemIcon-root': { color: '#475569' }
                                             },
                                             '&:hover': { 
-                                                backgroundColor: '#f0fdf4',
-                                                '& .MuiTypography-root': { color: '#059669' },
-                                                '& .MuiListItemIcon-root': { color: '#10b981' }
+                                                backgroundColor: '#f8fafc',
+                                                '& .MuiTypography-root': { color: '#334155' },
+                                                '& .MuiListItemIcon-root': { color: '#64748b' }
                                             },
                                         }}
                                     >

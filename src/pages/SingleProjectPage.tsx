@@ -2,13 +2,10 @@ import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useProjects } from '../context/ProjectContext';
 import { 
-    Box, Typography, Card, CardContent, Chip, IconButton, Button,
+    Box, Typography, IconButton, Button,
     CircularProgress
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import FolderIcon from '@mui/icons-material/Folder';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import GroupIcon from '@mui/icons-material/Group';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import VendorCards from '../components/VendorCards';
 
@@ -37,11 +34,12 @@ const SingleProjectPage: React.FC = () => {
         return (
             <Box sx={{ 
                 display: 'flex', 
-                justifyContent: 'center', 
+                flexDirection: 'column',
                 alignItems: 'center', 
+                justifyContent: 'center', 
                 minHeight: '60vh' 
             }}>
-                <CircularProgress sx={{ color: '#059669' }} />
+                <CircularProgress size={32} sx={{ color: '#1e293b' }} />
             </Box>
         );
     }
@@ -51,21 +49,26 @@ const SingleProjectPage: React.FC = () => {
         return (
             <Box sx={{ 
                 textAlign: 'center', 
-                py: 8,
+                py: 12,
                 px: 3
             }}>
-                <Typography variant="h5" sx={{ color: '#1e293b', fontWeight: 600, mb: 2 }}>
-                    Project Not Found
+                <Typography variant="h5" sx={{ color: '#1e293b', fontWeight: 600, mb: 1 }}>
+                    Project not found
                 </Typography>
-                <Typography variant="body1" sx={{ color: '#64748b', mb: 4 }}>
-                    The project you're looking for doesn't exist or has been removed.
+                <Typography variant="body2" sx={{ color: '#64748b', mb: 4 }}>
+                    This project doesn't exist or has been removed.
                 </Typography>
                 <Button
-                    variant="contained"
+                    variant="outlined"
                     onClick={() => navigate('/projects')}
                     sx={{
-                        backgroundColor: '#059669',
-                        '&:hover': { backgroundColor: '#047857' }
+                        borderColor: '#e2e8f0',
+                        color: '#1e293b',
+                        fontWeight: 500,
+                        '&:hover': { 
+                            borderColor: '#1e293b',
+                            backgroundColor: 'transparent'
+                        }
                     }}
                 >
                     Back to Projects
@@ -75,118 +78,95 @@ const SingleProjectPage: React.FC = () => {
     }
 
     return (
-        <Box sx={{ p: 4, minHeight: '100vh', backgroundColor: '#f8fafc' }}>
+        <Box sx={{ maxWidth: 1400, mx: 'auto' }}>
             {/* Header */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 4 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box sx={{ mb: 5 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3 }}>
                     <IconButton 
                         onClick={() => navigate('/projects')}
+                        size="small"
                         sx={{ 
-                            backgroundColor: '#fff',
-                            border: '1px solid #e2e8f0',
+                            color: '#64748b',
                             '&:hover': { backgroundColor: '#f1f5f9' }
                         }}
                     >
-                        <ArrowBackIcon sx={{ color: '#64748b' }} />
+                        <ArrowBackIcon sx={{ fontSize: 20 }} />
                     </IconButton>
-                    <Box>
-                        <Typography variant="h4" sx={{ fontWeight: 700, color: '#1e293b' }}>
-                            {project.name}
-                        </Typography>
-                        <Typography variant="body2" sx={{ color: '#64748b' }}>
-                            Manage vendors and track progress
-                        </Typography>
-                    </Box>
+                    <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                        Projects
+                    </Typography>
                 </Box>
                 
-                {/* Compare Vendors Button */}
-                {currentProjectVendors.length >= 2 && (
-                    <Button
-                        variant="contained"
-                        startIcon={<CompareArrowsIcon />}
-                        onClick={() => navigate(`/projects/${project_id}/compare`)}
-                        sx={{
-                            backgroundColor: '#1e293b',
-                            fontWeight: 600,
-                            borderRadius: 2,
-                            px: 3,
-                            '&:hover': { backgroundColor: '#334155' }
-                        }}
-                    >
-                        Compare Vendors
-                    </Button>
-                )}
-            </Box>
-
-            {/* Project Info Card */}
-            <Card 
-                elevation={0}
-                sx={{ 
-                    borderRadius: 4,
-                    border: '1px solid #e2e8f0',
-                    mb: 4,
-                    background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
-                    overflow: 'hidden'
-                }}
-            >
-                <Box 
-                    sx={{ 
-                        background: 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
-                        p: 3,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 2
-                    }}
-                >
-                    <Box 
-                        sx={{ 
-                            width: 56, 
-                            height: 56, 
-                            borderRadius: 3,
-                            backgroundColor: 'rgba(245, 158, 11, 0.2)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                        }}
-                    >
-                        <FolderIcon sx={{ fontSize: 28, color: '#f59e0b' }} />
-                    </Box>
-                    <Box sx={{ flex: 1 }}>
-                        <Typography variant="h5" sx={{ fontWeight: 700, color: '#fff' }}>
+                <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                    <Box>
+                        <Typography 
+                            variant="h4" 
+                            sx={{ 
+                                fontWeight: 700, 
+                                color: '#1e293b',
+                                letterSpacing: '-0.02em',
+                                mb: 0.5
+                            }}
+                        >
                             {project.name}
                         </Typography>
-                        <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                            {project.description || 'No description provided'}
-                        </Typography>
+                        {project.description && (
+                            <Typography variant="body1" sx={{ color: '#64748b', maxWidth: 500 }}>
+                                {project.description}
+                            </Typography>
+                        )}
                     </Box>
-                    <Chip 
-                        label="Active" 
-                        sx={{ 
-                            backgroundColor: '#059669',
-                            color: '#fff',
-                            fontWeight: 600,
-                            fontSize: 12
-                        }} 
-                    />
+                    
+                    {currentProjectVendors.length >= 2 && (
+                        <Button
+                            variant="outlined"
+                            startIcon={<CompareArrowsIcon sx={{ fontSize: 18 }} />}
+                            onClick={() => navigate(`/projects/${project_id}/compare`)}
+                            sx={{
+                                borderColor: '#e2e8f0',
+                                color: '#1e293b',
+                                fontWeight: 500,
+                                borderRadius: 2,
+                                px: 2.5,
+                                '&:hover': { 
+                                    borderColor: '#1e293b',
+                                    backgroundColor: 'transparent'
+                                }
+                            }}
+                        >
+                            Compare
+                        </Button>
+                    )}
                 </Box>
+            </Box>
 
-                <CardContent sx={{ p: 3 }}>
-                    <Box sx={{ display: 'flex', gap: 4 }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <CalendarTodayIcon sx={{ fontSize: 18, color: '#94a3b8' }} />
-                            <Typography variant="body2" sx={{ color: '#64748b' }}>
-                                Created: {new Date().toLocaleDateString()}
-                            </Typography>
-                        </Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <GroupIcon sx={{ fontSize: 18, color: '#94a3b8' }} />
-                            <Typography variant="body2" sx={{ color: '#64748b' }}>
-                                {currentProjectVendors.length} Vendors
-                            </Typography>
-                        </Box>
-                    </Box>
-                </CardContent>
-            </Card>
+            {/* Stats Bar */}
+            <Box 
+                sx={{ 
+                    display: 'flex', 
+                    gap: 4, 
+                    mb: 4,
+                    pb: 4,
+                    borderBottom: '1px solid #e2e8f0'
+                }}
+            >
+                <Box>
+                    <Typography variant="caption" sx={{ color: '#94a3b8', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        Vendors
+                    </Typography>
+                    <Typography variant="h5" sx={{ fontWeight: 600, color: '#1e293b' }}>
+                        {currentProjectVendors.length}
+                    </Typography>
+                </Box>
+                <Box>
+                    <Typography variant="caption" sx={{ color: '#94a3b8', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        Status
+                    </Typography>
+                    <Typography variant="h5" sx={{ fontWeight: 600, color: '#1e293b' }}>
+                        Active
+                    </Typography>
+                </Box>
+            </Box>
 
             {/* Vendors Section */}
             <Box>
@@ -197,7 +177,7 @@ const SingleProjectPage: React.FC = () => {
                         alignItems: 'center',
                         py: 8
                     }}>
-                        <CircularProgress sx={{ color: '#059669' }} />
+                        <CircularProgress size={28} sx={{ color: '#64748b' }} />
                     </Box>
                 ) : (
                     <VendorCards 

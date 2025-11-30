@@ -234,7 +234,7 @@ const WelcomePage: React.FC = () => {
               }}
             >
               Welcome to OpenSauce, your centralized vendor management platform. Navigate through projects using the sidebar, 
-              compare vendors, and track your team's progress all in one place.
+              compare vendors, and track your Agents's progress all in one place.
             </Typography>
             
             <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>

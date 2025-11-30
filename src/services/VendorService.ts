@@ -1,14 +1,19 @@
-import { v4 as uuidv4 } from 'uuid';
-
-// --- Import JSON Data ---
-// Import the JSON files directly (Vite handles JSON imports)
-import trueData2Json from '../../TrueData2.json';
-import allAgentDataJson from '../../AllAgentDATA.json';
+// --- Import API Client ---
 import { ApiClient, type Vendor, type VendorRequest } from './ApiService';
 
 // --- Interfaces ---
 
 export type VendorStatus = 'Hired' | 'Pending' | 'Rejected' | 'In Progress' | 'Completed';
+
+export interface NegotiationStrategy {
+    strategyName: string;
+    toneToAdopt: string;
+    recommendedBullets: string[];
+    counterOfferAmount: number;
+    psychologicalMechanism: string;
+    whyThisWorks: string;
+    successProbability: number;
+}
 
 export interface NegotiationMetadata {
     // Commercial Context
@@ -45,10 +50,12 @@ export interface NegotiationMetadata {
     offerSaturationLevel: string;
     remainingWiggleRoom: number; // percentage
     leverageDistribution: string;
+    leverageReasoning: string;
     stalemateRiskProbability: number; // percentage
     buyerPowerIndex: number; // 1-10
     sellerFloorHitProbability: number; // percentage
     concessionVelocityScore: number; // 1-10
+    walkAwayReadiness: string;
     
     // Parties
     buyerEntityName: string;
@@ -61,6 +68,8 @@ export interface NegotiationMetadata {
     // Constraints
     mustHaveRequirements: string[];
     niceToHaveRequirements: string[];
+    complianceObligations: string[];
+    legalContractualBlockers: string[];
     legalComplexityScore: number; // 1-10
     
     // Concessions
@@ -68,10 +77,12 @@ export interface NegotiationMetadata {
     buyerConcessions: string[];
     firstOfferAnchor: string;
     
-    // Strategy Recommendation
+    // Strategy Recommendations
+    strategies: NegotiationStrategy[];
     recommendedStrategy: string;
     strategySuccessProbability: number;
     suggestedNextMove: string;
+    marketContextSummary: string;
     summary: string;
 }
 
@@ -295,6 +306,10 @@ export function parseJsonToNegotiationMetadata(rawData: RawJsonData): Negotiatio
             getNestedValue(negotiationStatus, 'leverage_distribution', 'leverageDistribution') || 
             'Balanced'
         ),
+        leverageReasoning: String(
+            getNestedValue(negotiationStatus, 'leverage_reasoning', 'leverageReasoning') || 
+            'No reasoning available'
+        ),
         stalemateRiskProbability: parseNumber(
             getNestedValue(negotiationStatus, 'stalemate_risk_probability', 'stalemateRiskProbability'), 
             0
@@ -310,6 +325,10 @@ export function parseJsonToNegotiationMetadata(rawData: RawJsonData): Negotiatio
         concessionVelocityScore: parseNumber(
             getNestedValue(concessions, 'concession_velocity_score', 'concessionVelocityScore'), 
             5
+        ),
+        walkAwayReadiness: String(
+            getNestedValue(negotiationStatus, 'walk_away_readiness', 'walkAwayReadiness') || 
+            'Unknown'
         ),
         
         // Parties
@@ -343,6 +362,12 @@ export function parseJsonToNegotiationMetadata(rawData: RawJsonData): Negotiatio
         niceToHaveRequirements: ensureStringArray(
             getNestedValue(constraints, 'nice_to_have_requirements', 'niceToHaveRequirements')
         ),
+        complianceObligations: ensureStringArray(
+            getNestedValue(constraints, 'compliance_obligations', 'complianceObligations')
+        ),
+        legalContractualBlockers: ensureStringArray(
+            getNestedValue(constraints, 'legal_contractual_blockers', 'legalContractualBlockers')
+        ),
         legalComplexityScore: parseNumber(
             getNestedValue(constraints, 'legal_complexity_score', 'legalComplexityScore'), 
             5
@@ -361,7 +386,22 @@ export function parseJsonToNegotiationMetadata(rawData: RawJsonData): Negotiatio
             return String(anchor || 'Not specified');
         })(),
         
-        // Strategy Recommendation
+        // Strategy Recommendations
+        strategies: (() => {
+            const strategyList = strategies?.strategies;
+            if (Array.isArray(strategyList)) {
+                return strategyList.map((s: RawJsonData) => ({
+                    strategyName: String(s.strategy_name || 'Unknown'),
+                    toneToAdopt: String(s.tone_to_adopt || 'Neutral'),
+                    recommendedBullets: ensureStringArray(s.recommended_email_body_bullets),
+                    counterOfferAmount: parseNumber(s.specific_counter_offer_amount, 0),
+                    psychologicalMechanism: String(s.psychological_mechanism_used || ''),
+                    whyThisWorks: String(s.why_this_works || ''),
+                    successProbability: parseNumber(s.success_probability, 50),
+                }));
+            }
+            return [];
+        })(),
         recommendedStrategy: String(
             getNestedValue(strategies, 'best_strategy_recommendation', 'recommendedStrategy') || 
             'No recommendation'
@@ -377,6 +417,10 @@ export function parseJsonToNegotiationMetadata(rawData: RawJsonData): Negotiatio
             getNestedValue(toneAndStrategy, 'suggested_next_move', 'suggestedNextMove') || 
             'Continue negotiation'
         ),
+        marketContextSummary: String(
+            getNestedValue(strategies, 'market_context_summary', 'marketContextSummary') || 
+            ''
+        ),
         summary: String(
             getNestedValue(summarySection, 'summary') || 
             'No summary available'
@@ -384,9 +428,51 @@ export function parseJsonToNegotiationMetadata(rawData: RawJsonData): Negotiatio
     };
 }
 
-// --- Parse JSON files at module load ---
-const parsedVendor1Data = parseJsonToNegotiationMetadata(trueData2Json);
-const parsedVendor2Data = parseJsonToNegotiationMetadata(allAgentDataJson);
+// --- Statistics Cache for Comparison ---
+// Stores loaded statistics by vendor_id for use across pages
+const statisticsCache: Map<string, NegotiationMetadata> = new Map();
+
+// Export cache access functions
+export function getCachedStatistics(vendor_id: string): NegotiationMetadata | undefined {
+    return statisticsCache.get(vendor_id);
+}
+
+export function getAllCachedStatistics(): Map<string, NegotiationMetadata> {
+    return statisticsCache;
+}
+
+export function getCachedStatisticsArray(): { vendorId: string; data: NegotiationMetadata }[] {
+    return Array.from(statisticsCache.entries()).map(([vendorId, data]) => ({ vendorId, data }));
+}
+
+export function clearStatisticsCache(): void {
+    statisticsCache.clear();
+}
+
+// Load any previously saved statistics from localStorage on module init
+function loadCacheFromStorage(): void {
+    try {
+        const keys = Object.keys(localStorage).filter(k => k.startsWith('vendor_') && k.endsWith('_statistics'));
+        keys.forEach(key => {
+            const vendorId = key.replace('vendor_', '').replace('_statistics', '');
+            const data = localStorage.getItem(key);
+            if (data) {
+                try {
+                    const parsed = JSON.parse(data);
+                    statisticsCache.set(vendorId, parsed);
+                } catch (e) {
+                    console.warn(`Failed to parse cached statistics for ${vendorId}`);
+                }
+            }
+        });
+        console.log(`Loaded ${statisticsCache.size} cached statistics from storage`);
+    } catch (e) {
+        console.warn('Failed to load statistics cache from storage');
+    }
+}
+
+// Initialize cache from localStorage
+loadCacheFromStorage();
 
 
 // --- Service Class ---
@@ -421,4 +507,70 @@ export class VendorService {
         return updatedVendor;
     }
 
+    /**
+     * Fetches statistics for a vendor, parses them using parseJsonToNegotiationMetadata,
+     * caches the result, and saves to localStorage for persistence.
+     */
+    async getStatistics(vendor_id: string): Promise<NegotiationMetadata> {
+        const apiClient = new ApiClient(); 
+        const rawStatistics = await apiClient.getStatistics(vendor_id);
+        
+        // Parse the raw JSON into our structured NegotiationMetadata format
+        const parsedStatistics = parseJsonToNegotiationMetadata(rawStatistics);
+        
+        // Cache the statistics for comparison use
+        statisticsCache.set(vendor_id, parsedStatistics);
+        
+        // Also save to localStorage for persistence
+        localStorage.setItem(`vendor_${vendor_id}_statistics`, JSON.stringify(parsedStatistics));
+        
+        console.log(`Statistics loaded and cached for vendor ${vendor_id}`);
+        return parsedStatistics;
+    }
+
+    /**
+     * Get cached statistics without fetching (useful for comparison page)
+     */
+    getCachedStatistics(vendor_id: string): NegotiationMetadata | undefined {
+        return statisticsCache.get(vendor_id);
+    }
+
+    /**
+     * Get all cached statistics for comparison
+     */
+    getAllCachedStatistics(): Map<string, NegotiationMetadata> {
+        return statisticsCache;
+    }
+
+    /**
+     * Check if statistics are cached for a vendor
+     */
+    hasStatistics(vendor_id: string): boolean {
+        return statisticsCache.has(vendor_id);
+    }
+
+    /**
+     * Get statistics for multiple vendors (for comparison)
+     */
+    async getStatisticsForMultiple(vendor_ids: string[]): Promise<Map<string, NegotiationMetadata>> {
+        const results = new Map<string, NegotiationMetadata>();
+        
+        await Promise.all(
+            vendor_ids.map(async (vendor_id) => {
+                try {
+                    // Check cache first
+                    if (statisticsCache.has(vendor_id)) {
+                        results.set(vendor_id, statisticsCache.get(vendor_id)!);
+                    } else {
+                        const stats = await this.getStatistics(vendor_id);
+                        results.set(vendor_id, stats);
+                    }
+                } catch (error) {
+                    console.error(`Failed to load statistics for vendor ${vendor_id}:`, error);
+                }
+            })
+        );
+        
+        return results;
+    }
 }

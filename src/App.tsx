@@ -13,16 +13,47 @@ import { ProjectProvider, useProjects } from './context/ProjectContext';
 import React from 'react';
 import GmailPage from './pages/GmailPage';
 import VendorComparisonPage from './pages/VendorComparisonPage';
+import { Box, CircularProgress, Typography } from '@mui/material';
+
+// Minimalist centered loading component
+const LoadingScreen: React.FC<{ message?: string }> = ({ message = 'Loading...' }) => (
+  <Box 
+    sx={{ 
+      display: 'flex', 
+      flexDirection: 'column',
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      minHeight: '100vh',
+      backgroundColor: '#fafafa'
+    }}
+  >
+    <CircularProgress 
+      size={32} 
+      thickness={3}
+      sx={{ color: '#1e293b', mb: 2 }} 
+    />
+    <Typography 
+      variant="body2" 
+      sx={{ 
+        color: '#64748b', 
+        fontWeight: 500,
+        letterSpacing: '0.01em'
+      }}
+    >
+      {message}
+    </Typography>
+  </Box>
+);
 
 const ProtectedRoute: React.FC<{ children: React.ReactElement }> = ({ children }) => {
   const [user, loading] = useAuthState(auth);
   const { userProfile, isProfileLoading } = useProjects();
   
-  if (loading) return <div>Loading Authentication...</div>;
+  if (loading) return <LoadingScreen message="Authenticating..." />;
   
   if (!user) return <Navigate to="/login" replace />;
   
-  if (isProfileLoading) return <div>Loading User Profile...</div>; 
+  if (isProfileLoading) return <LoadingScreen message="Loading profile..." />; 
 
   if (!userProfile && user) {
       return <Navigate to="/register" replace />;
@@ -34,7 +65,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactElement }> = ({ children }
 const UnprotectedRoute: React.FC<{ children: React.ReactElement }> = ({ children }) => {
     const [user, loading] = useAuthState(auth);
 
-    if (loading) return <div>Loading Authentication...</div>;
+    if (loading) return <LoadingScreen message="Authenticating..." />;
     
     if (user) return <Navigate to="/" replace />;
     

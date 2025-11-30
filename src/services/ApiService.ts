@@ -230,6 +230,10 @@ export class ApiClient {
         return this.axios.put<Vendor>(`/vendors/${id}`, data).then(r => r.data).catch(this.handleError);
     }
 
+    getStatistics(vendor_id: string) {
+        return this.axios.get<any>(`/statistics/compile/${vendor_id}`).then(r => r.data).catch(this.handleError);
+    }
+
     // --------------------------------------------------
     // EMAILS
     // --------------------------------------------------
