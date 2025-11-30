@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, Link as RouterLink } from 'react-router-dom';
 import { VendorService, type NegotiationMetadata, getCachedStatistics } from '../services/VendorService';
 import { chatService, type Chat } from '../services/ChatService';
-
 import { type Vendor } from '../services/ApiService';
 import { 
     Box, Card, CardContent, Typography, CircularProgress, 
@@ -11,7 +10,7 @@ import {
     LinearProgress, Chip, ToggleButtonGroup, ToggleButton, Modal, Backdrop, Tooltip, Badge, Collapse
 } from '@mui/material';
 import { 
-    ArrowBack, Send, Business, Person, Email, 
+    ArrowBack, Send, Business, Person, Email,
     CloudUpload, InsertDriveFile, Delete, Description,
     Psychology, TrendingUp, Security, Handshake, Timeline,
     AttachMoney, Gavel, Lightbulb, Analytics,
