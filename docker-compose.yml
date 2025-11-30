@@ -1,0 +1,12 @@
+services:
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      platforms:
+        - linux/arm64
+        - linux/amd64
+    container_name: ui
+    image: ${DOCKER_USERNAME}/start_munich_fe:${DOCKER_IMAGE_VERSION}
+    ports:
+      - "4173:4173"
