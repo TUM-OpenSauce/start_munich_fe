@@ -1,0 +1,264 @@
+{
+    "phase_1": {
+        "CommercialContext": {
+            "product_or_service_name": "Orion Die – N3P Process (Next-Gen AI Chip) – 12-inch wafer production",
+            "skus_or_identifiers": [
+                "Orion Die N3P 12-inch wafer",
+                "Orion Die N3 non-P (reference)"
+            ],
+            "quantities": "Stage targets: 2026 ~50,000 wafers; 2027 ~80,000 wafers (MATR target 65,000–70,000). Final stance: ACC seeks 70,000 MATR in 2027; GST final offer considered: 10,750 USD/wafer for ≥60,000 MATR (N3P); alternative 10,950 USD/wafer for 10% Q1 2026 allocation on N3 non-P (proposed by GST; not accepted by ACC).",
+            "configurations_and_versions": "Process: N3P; Wafer size: 12-inch; Tapeout/WTV: results referenced; PDK version: v1.6; WSA version: v3.2; Yield targets: D0 defects/cm^2 ~0.12–0.15; Die yield ~600 good dies per wafer before packaging; N3 (non-P) variant discussed but ACC requires N3P exclusively.",
+            "service_level_expectations": "No explicit SLAs stated; negotiations focus on price, volume commitments, IP ownership delineation, and indemnification caps within WSA.",
+            "is_recurring_revenue": false,
+            "deal_term_months": null
+        },
+        "SentimentAnalysis": {
+            "current_conversation_sentiment": "Professional",
+            "sentiment_trajectory": "The negotiation began with data-driven, collaborative framing (Stage 2: cost breakdowns and price targets) and has progressed to a firmer, constraint-driven stance (Stage 3). There is no overt emotional distress or pleading from GST; instead, there is calculated assertiveness around a hard price floor and margin targets, indicating increasing control rather than desperation.",
+            "seller_personality_profile": "Hardliner",
+            "emotional_flags": [],
+            "seller_desperation_score": 2,
+            "relationship_warmth_score": 3
+        },
+        "ToneAndStrategyCues": {
+            "formality_level": "Professional",
+            "aggressiveness_vs_cooperativeness": "Balanced: firm but collaborative",
+            "buyer_leverage_indicators": [
+                "Large volume commitments: potential MATR of 70,000 wafers in 2027 and 65,000+ in 2026",
+                "Internal procurement and legal mandate driving decision speed (IRR targets, TWP alignment, WPA timeline)",
+                "Technical validation progress that supports a firm price-to-performance stance (drive to secure ROI)",
+                "Strategic importance of Orion Die for ACC's roadmap increases willingness to walk away from suboptimal terms",
+                "Clear escalation path to executive stakeholders if terms stall"
+            ],
+            "seller_eagerness_level": "High; actively negotiating, pushing back on price floors while balancing production costs and ramp risks",
+            "escalation_triggers": [
+                "Failure to reach or improve on the $10,750/wafer price with 70k MATR within 48-72 hours",
+                "GST refuses to remove N3P exclusivity or cannot agree acceptable IP/indemnification terms (>= $500M)",
+                "Key technical issues (V_T variability, WTV yield) are not adequately resolved in agreement terms",
+                "No executive-level escalation meeting scheduled by a stated deadline",
+                "Final commercial offer remains above buyer's acceptable price/volume envelope"
+            ],
+            "buyer_power_index": 8,
+            "suggested_next_move": "Collaborative Ask"
+        },
+        "TechnicalArtifacts": {
+            "thread_timestamps": [
+                "Nov 12, 2025, 9:15 AM PST",
+                "Nov 13, 2025, 11:22 AM PST",
+                "Nov 15, 2025, 4:10 PM PST",
+                "Nov 18, 2025, 8:50 AM PST",
+                "Nov 20, 2025, 3:30 PM PST",
+                "Nov 21, 2025, 9:55 AM PST",
+                "Nov 28, 2025, 5:15 PM PST"
+            ],
+            "relevant_attachments_context": [
+                "No attachments detected in the provided emails. The chain references WSA (Wafer Supply Agreement) and WPA (Wafer Price Agreement), but no actual orders, PO numbers, contract IDs, or MSAs are included in this thread."
+            ],
+            "extracted_ids": [],
+            "thread_duration": "16 days 8 hours",
+            "message_count_buyer": 6,
+            "message_count_seller": 2,
+            "avg_response_time_hours_seller": 35.6
+        },
+        "TimelineInformation": {
+            "critical_deadlines": [
+                "Nov 20, 2025 5:00 PM PST (End of Day sign-off deadline)"
+            ],
+            "time_pressure_source": "None",
+            "renewal_expiration_date": null,
+            "lead_time_constraints": "Not explicitly stated; typical deployment/ramp window 6-8 weeks post-WSA, contingent on wafer yield and ramp performance.",
+            "delay_risks": [
+                "IP ownership and indemnification cap negotiations could delay final WSA",
+                "N3P yield variability and VT shifts affecting feasibility and costs",
+                "Internal alignment on pricing/volume commitments could stall closure",
+                "Wafer supply/demand dynamics and ramp timing may constrain schedule",
+                "Extended legal review of WSA terms could push out close date"
+            ],
+            "response_cadence": "Mixed response speeds: generally 1-3 business days between replies, with a notable 7-day gap between 11/21 and 11/28.",
+            "days_until_critical_deadline": -1,
+            "seller_urgency_score": 8
+        },
+        "PricingInformation": {
+            "seller_quoted_prices": [
+                "$12,500 USD/Wafer (2026: 50k wafers, FOB GST Fab)",
+                "$12,100 USD/Wafer (2027: 80k wafers, FOB GST Fab)",
+                "$11,150 USD/Wafer (GST internal floor for margin)",
+                "$10,950 USD/Wafer (Q1 2026 allocation hedge, N3 non-P, 10% of Q1)",
+                "$10,750 USD/Wafer (Final proposed GST offer for 70k MATR)"
+            ],
+            "buyer_target_price": "9000.00 USD/Wafer",
+            "competitor_pricing_reference": null,
+            "volume_pricing_mechanics": "Tiered pricing tied to forecasted wafer volumes: 50k in 2026 at 12,500; 80k in 2027 at 12,100; volume discounts and amortization drive price; internal floors and hedges affect final offers; negotiation centers on price points around 10,750–11,150 with MATR of 60k–70k in 2027.",
+            "bundling_upsell_offers": [
+                "Minimum Annual Take Rate (MATR) commitment of 65k–70k wafers in 2027",
+                "Q1 2026 allocation of a partial N3 non-P wafer hedged at 10,950/wafer",
+                "N3P exclusive manufacturing alignment (design IP remains with ACC; process IP with GST)",
+                "Mask Set Amortization allocated as part of pricing: $150M USD",
+                "Indemnification cap discussion (targeting $500M or contract value, whichever greater)"
+            ],
+            "latest_quoted_price_numeric": 10750.0,
+            "latest_discount_percentage": 0.0,
+            "currency_code": "USD"
+        },
+        "HeavyConstraints": {
+            "must_have_requirements": [
+                "Clear delineation of IP ownership: ACC retains sole ownership of Design IP; GST retains ownership of Process IP; explicit, agreed allocation for Derivatives/Improvements with no automatic cross-licensing.",
+                "Robust third-party IP indemnification: indemnity against IP infringement with a cap of at least USD 500 million or the cumulative contract value (whichever is greater), plus coverage for willful misconduct; ensure control of defense and settlement.",
+                "Finalized Wafer Supply Agreement (WSA) terms: price per wafer and ramped volume path must be mutually acceptable and aligned with ACC's commercial targets (e.g., defined 2026 baseline volume and 2027 MATR commitment) and no unconstrained restrictions that would jeopardize ACC's supply security.",
+                "Restriction on exclusive or forced use of N3 non-P wafers: prohibition of any terms that require ACC to accept non-P variants if not technically justified; ensure N3P-only provision or equivalent risk-managed option with clear justification.",
+                "Defined legal review process with redlines: establish a fixed, mutually agreed SLA for legal review/redlines completion to prevent multi-week delays (e.g., 2-3 weeks per cycle) and explicit ownership of redline changes.",
+                "Clear path to closing the deal within a defined timeline: alignment on final commercial terms and execution plan that does not rely on protracted internal approvals; include escalation contacts and milestones."
+            ],
+            "nice_to_have_requirements": [
+                "IP covenants covering post-termination IP handling and post-termination usage rights for derivatives/improvements.",
+                "Performance warranties tied to yield/quality targets with corresponding credits/adjustments if targets are not met.",
+                "Longer-term price protection or volume-based rebates if yield improvements or capacity upgrades occur.",
+                "Mutual non-use/non-disclosure improvements and audit rights to verify compliance without overly burdensome terms."
+            ],
+            "compliance_obligations": [
+                "Export controls and trade compliance considerations (EAR/ITAR) for cross-border technology transfers and wafers.",
+                "Anti-corruption and anti-bribery compliance (e.g., FCPA/UK Bribery Act) given cross-border sourcing and potential gifts/benefits in negotiations.",
+                "Data security and confidentiality controls aligned with industry standards (e.g., SOC 2, ISO 27001 where applicable, and NDA terms).",
+                "Antitrust/competition law compliance in pricing, volume commitments, and exclusive supply arrangements.",
+                "Supplier/manufacturer due diligence and audit rights to verify compliance with applicable laws and standards."
+            ],
+            "legal_contractual_blockers": [
+                "IP Ownership dispute risk if not clearly delineated (Stage 2 email 06 highlights joint ownership concerns).",
+                "Indemnification cap and scope not yet aligned (GST's current position vs ACC's requirements).",
+                "WSA draft (v3.2) requires redlines; unresolved terms on IP ownership, indemnity, and liability provisions.",
+                "N3P exclusivity or forced N3 non-P wafer allocations creating technical/operational risk for ACC (Stage 3).",
+                "Potential timeline impact from legal reviews/redlines (need to quantify SLAs and ownership of redline changes)."
+            ],
+            "legal_complexity_score": 8
+        },
+        "PartiesAndRoles": {
+            "buyer_entity_name": "Aurora Computing Corp (ACC) - AI Accelerators/GPUs",
+            "seller_entity_name": "Global Silicon Technologies (GST) - Leading-Edge Foundry",
+            "seller_global_location": "Not specified",
+            "decision_makers": [
+                "Anna Petrov",
+                "Jens Müller",
+                "Shiro Kurosawa",
+                "E. Wang",
+                "T. Sato",
+                "R. Patel"
+            ],
+            "influencers_and_stakeholders": [
+                "Dr. L. Chen",
+                "D. Sharma",
+                "Eric",
+                "Takao",
+                "S. Lee"
+            ],
+            "contact_details": [
+                "lchen@acc.com",
+                "dsharma@gstfoundry.com",
+                "apetrov@acc.com",
+                "skurosawa@gstfoundry.com",
+                "jmueller@acc.com",
+                "rpatel@gstfoundry.com"
+            ],
+            "authority_analysis": "ACC has procurement sign-off authority via Anna Petrov (Director, Strategic Sourcing) and contract/legal sign-off via Jens Müller (Senior Counsel). GST negotiations are led commercially by Shiro Kurosawa (VP Sales) but require cross-functional sign-off from GST’s CFO (E. Wang) and VP Operations (T. Sato), with GST Legal (R. Patel) advising. The thread shows a misalignment: ACC is pressing for aggressive pricing/volume and expects procurement/legal to close; GST is balancing price with higher-cost N3P ramp and legal/operational constraints. The ultimate signer on GST side is not named in the thread, creating ambiguity about the final approving authority (decision maker) for the deal.",
+            "decision_maker_identified": false,
+            "seller_team_size": 8
+        },
+        "ConcessionsAndSignals": {
+            "seller_concessions": [
+                "Reduced wafer price from 12,500 USD/Wafer to 10,750 USD/Wafer for a minimum annual take rate (MATR) of 60,000 wafers in 2027, conditional on exclusive use of N3P wafers (no N3 non-P).",
+                "Offered to accept a high-volume commitment (70,000 MATR) in 2027 in exchange for the lower price point, signaling willingness to trade price for volume.",
+                "Proposed hedge: 10% of Q1 2026 allocation as N3 non-P (Q1 allocation) at 10,950 USD/wafer to manage ramp risk."
+            ],
+            "buyer_concessions": [
+                "Increased commitment to 70,000 wafers in 2027 (MATR) beyond the initial target 60k.",
+                "Accepted a wafer price of 10,750 USD/wafer conditioned on MATR; insisted on exclusive N3P wafers (reject N3 non-P).",
+                "Drew the line on IP and indemnification terms by accepting ACC's position on a 500M USD indemnification cap (or greater depending on contract value) and maintaining sole ownership of ACC Design IP."
+            ],
+            "explicit_constraints": [
+                "ACC will not accept joint ownership of Design IP; ACC demands sole ownership of Design IP for Design IP, with GST retaining only Process IP.",
+                "Indemnification cap must be 500 million USD or the cumulative contract value, whichever is greater.",
+                "N3 non-P wafers are not acceptable; only N3P wafers will be used."
+            ],
+            "implicit_constraints": [
+                "Pressure to close quickly (deadline-driven tone for final WSA).",
+                "GST must balance margin preservation with ramp risk if volume commitments are increased.",
+                "ACC leverages internal price floor signals to push for a favorable price-volume trade-off."
+            ],
+            "negotiation_pressure_points": [
+                "Volume commitments (60k–70k MATR) vs price reductions (12,500 → 10,750).",
+                "N3P exclusivity vs N3 non-P hedging allocations (hedge proposal: 10% Q1 allocation at 10,950).",
+                "IP ownership split and indemnification caps (500M vs higher floor).",
+                "Urgent closure deadlines and WSA finalization."
+            ],
+            "first_offer_anchor": "12,500 USD/wafer",
+            "drop_pattern_analysis": "Initial concessions were modest (12,500 → 12,100, a 400 drop). A later, sizable concession to 10,750 indicates GST testing ACC's willingness to trade volume for lower price and hints that GST may be nearing their floor; internal models reference a floor around 11,150. The sequence shows non-linear decay with a significant late-stage concession.",
+            "concession_velocity_score": 8,
+            "seller_floor_hit_probability": 65
+        }
+    },
+    "phase_2": {
+        "SummaryProvider": {
+            "summary": "Strategic readout for Head of Procurement: Orion Die (ACC vs GST) – N3P Wafer Supply Agreement negotiation\n\nCurrent posture and read on health\n- Stage: 3 (The Crunch) with high stakes on price, volume, IP allocation, and indemnification. The parties are at a critical apex, and the next 48–72 hours are decisive for a close.\n- What just happened (saturation signal): GST has moved from an initial 12,500 USD/wafer down to 10,750 USD/wafer contingent on ACC taking 70,000 wafers in 2027, and locking to exclusive N3P wafers. This is a substantial concession and comes near GST’s implied internal floor (around 11,150 USD/wafer). The jump from 12,100 to 10,750 represents a steep deceleration in concessions, indicating diminishing wiggle room and signaling that saturation is near.\n- Momentum: Negotiation cadence shows a stall/slowdown (7-day gap between 11/21 and 11/28) with a flurry of activity before that. The thread is now in a high-pressure, last-mile phase where speed and executive alignment will determine closure viability. There is clear urgency to move to a final WSA.\n- BATNA dynamics:\n  - ACC’s side (buyer): Strong push on price and 2027 MATR, plus strict N3P exclusivity and IP/indemnity terms. ACC’s alternative vendors are not stated; the perceived BATNA appears limited in the thread, elevating GST’s leverage if ACC cannot close. Legal/IP constraints give ACC leverage but also risk if terms cannot be pinned to a clean redline.\n  - GST’s side (seller): Has potential to land a high-volume contract (70k MATR) but faces margin erosion pressures (N3P ramp costs, IP indemnity cap, and a required 500M+ cap). GST needs to balance ramp risk with margin protection and avoid setting a precedent that yields unprofitable volumes.\n\nPosition assessment: Are we winning, stuck, or about to lose?\n- We are currently “stuck” with a real chance to close on favorable terms if GST accepts 10,750 USD/wafer for ~70k MATR with N3P exclusivity and ACC’s IP ownership model intact. However, the price floor (internal floor around 11,150) and the demand for a $500M indemnity cap or greater create tension. The deal is highly sensitive to the next executive sign-off and to whether GST can tolerate the margin and ramp risk. If GST cannot concede further on price or remove N3 non-P hedges, ACC risks a deadlock or reversion to suboptimal alternatives.\n\nKey levers and signals to watch\n- Saturation point: The concession path has slowed; further meaningful price relief would likely require larger volume commitments (MATR) or additional risk-sharing terms. The 70k MATR with 10,750 price is a potential close point, but any softening (e.g., accepting N3 non-P or lowering indemnity protection) would be a regression for ACC.\n- Momentum risk: Negative cadence risk remains until an executive-level close call is scheduled and executed. The lack of a firm close plan and redline SLA increases the chance of stalls.\n- BATNA realism: ACC should pressure for lock-in of terms with a strict closure timeline and concrete escalation path; GST should keep optionality open with a credible fallback in case of delays, but avoid undermining the current offer’s value by splintering terms.\n\nRecommended near-term moves for the Head of Procurement\n- Aim for a rapid executive alignment call (within 24–48 hours) to confirm the final deal posture and to authorize a high-signal, single-offer close: price at 10,750 USD/wafer, 70,000 MATR in 2027, exclusive N3P wafers, and a $500M indemnification cap (or up to contract value, whichever greater), with ACC owning Design IP and GST owning Process IP.\n- Lock down a hard redline SLA on WSA v3.2: define a 2–3 week window for legal review/redlines, with explicit ownership of redline changes and a fixed close date. Assign clear escalation contacts and milestones.\n- Preserve N3P exclusivity as a gating term while keeping a tightly scoped, auditable ramp plan. If GST resists N3P exclusivity, request a well-justified ramp-risk mitigation alternative tied to performance milestones.\n- Confirm a tight closing package for Q1 2026 allocation only if technically justified; otherwise minimize non-P hedges to avoid technical risk and cost escalation.\n- Build a robust fallback plan (BATNA) by quietly validating a short list of secondary suppliers that could meet the 2026 ramp if the WSA fails to close by a defined deadline.\n\nRisk flags and deal health so far\n- IP risk: Ambiguities around joint ownership are resolved in favor of ACC’s sole ownership of Design IP; ensure cross-licensing of derivatives is explicitly bounded.\n- Indemnification: $500M cap or contract value, whichever greater, is essential to de-risk potential litigation; ensure control of defense and settlements.\n- N3P exclusivity: Non-P hedges are not acceptable to ACC; if GST agrees to hedge terms, they should be tightly defined and risk-managed.\n- Legal timeline: Redline cycles must be constrained with strict deadlines to avoid multi-week delays.\n\nBottom-line verdict for now\n- Health: Moderate to leaning toward “closeable” if GST accepts the 10,750/70k MATR/N3P/IP terms with a tight closing timeline. There is risk of stalling if any terminal terms (IP, indemnity, or N3 non-P hedges) are forced back into negotiation.\n- Position: The buyer’s aggressive volume demand plus the supplier’s willingness to concede price indicate a seesaw balance. The next 48 hours will determine whether we seal a favorable WSA or revert to a suboptimal path or stall. The edge currently favors ACC’s need for risk-managed, high-volume supply, but GST’s margin and ramp concerns remain significant constraints.\n\nStrategic framing for the next move: push for a near-term executive close on 10,750/70k MATR with N3P exclusivity and 500M indemnity cap, backed by a strict redline SLA and a concrete closing timeline; keep alternative suppliers as a quiet but ready BATNA."
+        },
+        "NegotationStatus": {
+            "overall_deal_health_score": 78,
+            "deal_phase": "Active Bargaining",
+            "offer_saturation_level": "High Saturation (Near Floor)",
+            "remaining_price_wiggle_room_estimate": 5.0,
+            "leverage_distribution": "Slightly Buyer Leaning",
+            "leverage_reasoning": "ACC has strong leverage from high-volume commitments (potential MATR of 70k in 2027, with possibility to increase) and has driven the price down to 10,750 USD/wafer while insisting on N3P exclusivity. GST faces ramp/yield risks with N3P vs N3 non-P debates, and must meet a stringent indemnification cap and IP ownership separation. ACC’s procurement and legal sign-off velocity strengthens closing leverage, whereas GST’s reliance on IP scope, indemnity, and ramp risk remains a significant gatekeeper. The balance remains buyer-favorable on terms that affect economics, but non-price terms (IP, indemnification, WSA/N3P exclusivity) are the current friction points that could stall close if not resolved.",
+            "stalemate_risk_probability": 40,
+            "walk_away_readiness": "Moderate walk-away readiness by GST; willing to walk away on IP/indemnity terms or N3P exclusivity if terms can't be agreed."
+        }
+    },
+    "phase_3": {
+        "market_context_summary": "ACC (buyer) seeks to secure Orion Die at a lower wafer price with strong 2027 volume commitments, while GST (supplier) guards margin via N3P/N3P+ incentives, IP/indemnity terms, and floor pricing. The current apex shows ACC pressing for $10,750/wafer with 70k MATR and N3P exclusivity, while GST signals an absolute floor around $11,150 with cap considerations. The negotiation now hinges on price, volume, process choices (N3P vs N3), and risk allocation (indemnification), making three distinct strategic arcs viable: push for quick closure, collaborative value-sharing, or controlled time-pressure closure.",
+        "strategies": [
+            {
+                "strategy_name": "The Aggressive Closer",
+                "tone_to_adopt": "Urgent/Demanding",
+                "recommended_email_body_bullets": [
+                    "Wafer price set at $11,150/wafer for 70,000 MATR in 2027, with ACC committing to exclusive N3P use",
+                    "Indemnification cap aligned to $500M (or contract value, whichever is greater) as GST demand remains non-negotiable",
+                    "Payment terms: Net 45 days; confirm supply continuity to de-risk ramp",
+                    "Deadline: 48-hour decision window to lock the deal and avoid project delays",
+                    "Maintain collaboration on technical issues; if accepted, finalize WPA and WSA alignment"
+                ],
+                "specific_counter_offer_amount": 11150.0,
+                "psychological_mechanism_used": "Cognitive Closure via Time Pressure + Anchoring & Adjustment",
+                "why_this_works": "Under time pressure (De Dreu), the buyer forces a simplified, yes/no decision, reducing exploratory bargaining. Framing the offer as a non-negotiable floor with a concrete deadline increases the likelihood GST concedes to preserve the relationship and maintain order in procurement.",
+                "success_probability": 40
+            },
+            {
+                "strategy_name": "The Collaborative Pivot",
+                "tone_to_adopt": "Warm/Collaborative",
+                "recommended_email_body_bullets": [
+                    "Propose a joint yield-improvement program to reduce true landed cost, sharing a portion of N3P ramp costs",
+                    "Wafer price targeted around $10,750 with 75,000 MATR in 2027 (or mutually agreed uplift) linked to improvements in yield and process reliability",
+                    "Commit to exclusive N3P for Orion Die, but open a joint engineering task force to harden PPA against VT variability",
+                    "Capex/yield sharing plan to finance test vehicles and WTV improvements; maintain open pricing for future revisions if yields improve",
+                    "Formalize a 60–90 day review cycle to measure progress and adjust pricing as a function of actual results"
+                ],
+                "specific_counter_offer_amount": 10750.0,
+                "psychological_mechanism_used": "Collaborative Framing & Mutual Gains; Anchoring & Adjustment",
+                "why_this_works": "Collaborative framing reduces defensiveness and creates shared fate. By tying price to realized yield improvements and mutual commitments, ACC re-anchors GST toward a lower effective cost of ownership while preserving margin through volume uplift and risk-sharing, aligning with loss-framing about relationship disruption if the deal stalls.",
+                "success_probability": 65
+            },
+            {
+                "strategy_name": "The Time-Crunch",
+                "tone_to_adopt": "Urgent/Demanding",
+                "recommended_email_body_bullets": [
+                    "Set a firm 72-hour deadline to finalize the WPA and WSA, or ACC will reassess supplier options and timing of Orion ramp",
+                    "Final offer: $11,150/wafer with 70k MATR in 2027, but with expedited legal/tech sign-off to prevent ramp risk",
+                    "Insist on N3P exclusivity if price floor is met; request rapid review of indemnification cap at $500M",
+                    "Offer to accelerate payment terms to Net 30 in exchange for price stability; propose incremental commitments if needed",
+                    "Escalate to executive sponsors if the deadline passes to preserve strategic alignment"
+                ],
+                "specific_counter_offer_amount": 11150.0,
+                "psychological_mechanism_used": "Time Pressure & Cognitive Closure",
+                "why_this_works": "A defined hard deadline compresses search space and compels GST to finalize terms to avoid costly delay—leveraging De Dreu’s time-pressure effect while signaling urgency to protect Orion Die’s ramp timeline.",
+                "success_probability": 50
+            }
+        ],
+        "best_strategy_recommendation": "The Collaborative Pivot"
+    }
+}

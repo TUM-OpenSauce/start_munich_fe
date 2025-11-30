@@ -1,0 +1,513 @@
+openapi: 3.0.3
+info:
+  title: Professional Business Management API
+  description: >
+    Eine RESTful API für Buyer, Project, Vendor und Email Management.
+    Optimiert nach REST Best Practices.
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@example.com
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production Server
+
+# Authentifizierung ist für "bessere" APIs Standard
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Buyers
+    description: Management of buyer profiles
+  - name: Projects
+    description: Project administration
+  - name: Vendors
+    description: Vendor management
+  - name: Emails
+    description: Email storage and dispatching
+
+paths:
+  # -------------------------
+  # BUYERS (Resource-Oriented)
+  # -------------------------
+  /buyers:
+    post:
+      tags:
+        - Buyers
+      summary: Register a new buyer
+      operationId: createBuyer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuyerRequest'
+      responses:
+        '201':
+          description: Buyer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Buyer'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /buyers/{id}:
+    parameters:
+      - $ref: '#/components/parameters/ResourceId'
+    get:
+      tags:
+        - Buyers
+      summary: Get buyer profile by ID
+      operationId: getBuyer
+      responses:
+        '200':
+          description: Buyer details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Buyer'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - Buyers
+      summary: Update buyer profile
+      description: Full update of the buyer profile.
+      operationId: updateBuyer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuyerRequest'
+      responses:
+        '200':
+          description: Buyer updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Buyer'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # -------------------------
+  # PROJECTS
+  # -------------------------
+  /projects:
+    post:
+      tags:
+        - Projects
+      summary: Create a new project
+      operationId: createProject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
+      responses:
+        '201':
+          description: Project created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+
+  /projects/{id}:
+    parameters:
+      - $ref: '#/components/parameters/ResourceId'
+    get:
+      tags:
+        - Projects
+      summary: Get project details
+      operationId: getProject
+      responses:
+        '200':
+          description: Project details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - Projects
+      summary: Update project
+      operationId: updateProject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
+      responses:
+        '200':
+          description: Project updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+
+  # -------------------------
+  # VENDORS
+  # -------------------------
+  /vendors:
+    post:
+      tags:
+        - Vendors
+      summary: Create a new vendor
+      operationId: createVendor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorRequest'
+      responses:
+        '201':
+          description: Vendor created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+
+  /vendors/{id}:
+    parameters:
+      - $ref: '#/components/parameters/ResourceId'
+    get:
+      tags:
+        - Vendors
+      summary: Get vendor details
+      operationId: getVendor
+      responses:
+        '200':
+          description: Vendor details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - Vendors
+      summary: Update vendor
+      operationId: updateVendor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorRequest'
+      responses:
+        '200':
+          description: Vendor updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+
+  # -------------------------
+  # EMAILS (Storage & Management)
+  # -------------------------
+  /emails:
+    get:
+      tags:
+        - Emails
+      summary: List emails (optionally filtered by vendor)
+      operationId: listEmails
+      parameters:
+        - name: vendorId
+          in: query
+          description: Filter emails by specific Vendor ID
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: List of emails
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Email'
+    post:
+      tags:
+        - Emails
+      summary: Create/Store a single email
+      operationId: createEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailRequest'
+      responses:
+        '201':
+          description: Email stored
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Email'
+
+  /emails/batch:
+    post:
+      tags:
+        - Emails
+      summary: Create multiple emails in bulk
+      operationId: createEmailBulk
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/EmailRequest'
+      responses:
+        '201':
+          description: Emails created successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Email'
+
+  /emails/{id}:
+    parameters:
+      - $ref: '#/components/parameters/ResourceId'
+    get:
+      tags:
+        - Emails
+      summary: Get email details
+      operationId: getEmail
+      responses:
+        '200':
+          description: Email details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Email'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - Emails
+      summary: Update email record
+      operationId: updateEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailRequest'
+      responses:
+        '200':
+          description: Email updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Email'
+
+  # -------------------------
+  # EMAIL INTERACTION (Actions)
+  # -------------------------
+  /emails/send:
+    post:
+      tags:
+        - Emails
+      summary: Send an email via Gmail API
+      description: >
+        Triggers the sending of an email. 
+        CHANGED: Changed from GET to POST because sending emails is a side-effect.
+      operationId: sendEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailRequest'
+      responses:
+        '200':
+          description: Email sent successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '502':
+          description: Upstream error (Gmail API failed)
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    ResourceId:
+      name: id
+      in: path
+      required: true
+      description: Unique identifier (UUID)
+      schema:
+        type: string
+        format: uuid
+
+  responses:
+    BadRequest:
+      description: Invalid input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    # --- COMMON ERROR SCHEMA ---
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+
+    # --- BUYER ---
+    BuyerRequest:
+      type: object
+      required:
+        - emailAddress
+      properties:
+        emailAddress:
+          type: string
+          format: email
+        name:
+          type: string
+          example: "Max Mustermann"
+        company:
+          type: string
+          example: "Musterfirma GmbH"
+
+    Buyer:
+      allOf:
+        - $ref: '#/components/schemas/BuyerRequest'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              readOnly: true
+
+    # --- PROJECT ---
+    ProjectRequest:
+      type: object
+      required:
+        - name
+        - buyerId
+      properties:
+        name:
+          type: string
+          example: "Website Relaunch"
+        description:
+          type: string
+          example: "Relaunch der Corporate Website Q4"
+        buyerId:
+          type: string
+          format: uuid
+          description: "ID des Buyers, dem das Projekt gehört"
+
+    Project:
+      allOf:
+        - $ref: '#/components/schemas/ProjectRequest'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              readOnly: true
+            vendors:
+              type: array
+              readOnly: true
+              description: "Eine Liste der Vendors, die zu diesem Projekt gehören"
+              items:
+                $ref: '#/components/schemas/Vendor'
+
+    # --- VENDOR ---
+    VendorRequest:
+      type: object
+      required:
+        - emailAddress
+        - projectId
+      properties:
+        emailAddress:
+          type: string
+          format: email
+        name:
+          type: string
+        company:
+          type: string
+        projectId:
+          type: string
+          format: uuid
+          description: "ID vom Projekt, in dem der Vendor enthalten ist"
+
+    Vendor:
+      allOf:
+        - $ref: '#/components/schemas/VendorRequest'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              readOnly: true
+
+
+    # --- EMAIL ---
+    EmailRequest:
+      type: object
+      required:
+        - emailSubject
+        - emailContent
+        - dateEmailSend
+        - buyerSend
+      properties:
+        buyerId:
+          type: string
+          format: uuid
+        vendorId:
+          type: string
+          format: uuid
+        emailSubject:
+          type: string
+        emailContent:
+          type: string
+        buyerSend:
+          type: boolean # 0 if Buyer received email from vendor, 1 if Buyer send the email to the vendor
+        dateEmailSend:
+          type: string
+          format: date-time
+          description: Planned send time
+        attachment:
+          type: string
+          format: byte
+          description: Base64 encoded file content
+
+    Email:
+      allOf:
+        - $ref: '#/components/schemas/EmailRequest'
+        - type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              readOnly: true

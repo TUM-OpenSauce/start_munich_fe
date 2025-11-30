@@ -1,0 +1,167 @@
+{
+  "Sentiment Analysis": {
+    "current_conversation_sentiment": "Neutral with a slight positive shift",
+    "sentiment_trajectory": "Stable to slightly improving",
+    "seller_personality_profile": "Professional, persistent, slightly eager",
+    "emotional_flags": "None detected",
+    "seller_desperation_score": 3,
+    "relationship_warmth_score": 7.5
+  },
+  "Parties and Roles": {
+    "buyer_entity_name": "Acme Corp.",
+    "seller_entity_name": "Innovate Solutions LLC",
+    "seller_global_location": "New York, USA",
+    "decision_makers": [
+      "Jane Doe (Buyer Procurement Director)"
+    ],
+    "influencers_and_stakeholders": [
+      "John Smith (Buyer Technical Lead)",
+      "Alice Brown (Buyer Finance Manager)"
+    ],
+    "contact_details": "jane.doe@acmecorp.com",
+    "authority_analysis": "Seller has full quoting authority; Buyer decision rests with Procurement Director.",
+    "decision_maker_identified": true,
+    "seller_team_size": 2
+  },
+  "Commercial Context": {
+    "product_or_service_name": "Enterprise Data Analytics Platform",
+    "skus_or_identifiers": [
+      "EDA-PLAT-PREMIUM-2YR",
+      "SETUP-FEE-BASIC"
+    ],
+    "quantities": "1 platform license, 50 user seats",
+    "configurations_and_versions": "Premium Tier, Cloud Hosted (AWS), Version 4.2",
+    "service_level_expectations": "99.9% uptime, 4-hour critical support response time",
+    "is_recurring_revenue": true,
+    "deal_term_months": 24
+  },
+  "Pricing Information": {
+    "seller_quoted_prices": [
+      150000.00,
+      135000.00,
+      120000.00
+    ],
+    "buyer_target_price": 100000.00,
+    "competitor_pricing_reference": "Competitor X quoted $110,000 for a similar, but less feature-rich, product.",
+    "volume_pricing_mechanics": "10% discount applied for 24-month commitment.",
+    "bundling_upsell_offers": "Optional Premium Support add-on for $10,000/year (rejected by buyer).",
+    "latest_quoted_price_numeric": 120000.00,
+    "latest_discount_percentage": 20.0,
+    "currency_code": "USD"
+  },
+  "Concessions and Negotiation Signals": {
+    "seller_concessions": [
+      "Reduced initial quote by 20%",
+      "Waived implementation fee (value $5,000)"
+    ],
+    "buyer_concessions": [
+      "Agreed to 24-month term instead of 12 months"
+    ],
+    "explicit_constraints": "Buyer must close before end of Q4.",
+    "implicit_constraints": "Seller appears eager to close this quarter for quota.",
+    "negotiation_pressure_points": "Competitor X's lower price; buyer's firm budget.",
+    "first_offer_anchor": 150000.00,
+    "drop_pattern_analysis": "Aggressive initial drops, now slowing down.",
+    "concession_velocity_score": 4,
+    "seller_floor_hit_probability": 65
+  },
+  "Heavy Constraints": {
+    "must_have_requirements": [
+      "HIPAA compliance",
+      "Single Sign-On (SSO)"
+    ],
+    "nice_to_have_requirements": [
+      "AI-driven reporting module"
+    ],
+    "compliance_obligations": [
+      "Data residency in the EU (for future expansion)"
+    ],
+    "legal_contractual_blockers": "Initial terms around liability were a blocker, now resolved.",
+    "legal_complexity_score": 6
+  },
+  "Timeline Information": {
+    "critical_deadlines": "Contract signed by December 15, 2025",
+    "time_pressure_source": "Buyer's annual budget reset/year-end closure.",
+    "renewal_expiration_date": "N/A (New Deal)",
+    "lead_time_constraints": "3-week implementation lead time after contract signature.",
+    "delay_risks": "Legal review (currently in progress).",
+    "response_cadence": "Daily for the last week, previously weekly.",
+    "days_until_critical_deadline": 15,
+    "seller_urgency_score": 8
+  },
+  "Tone and Strategy Cues": {
+    "formality_level": "Professional/Formal",
+    "aggressiveness_vs_cooperativeness": "Highly cooperative",
+    "buyer_leverage_indicators": [
+      "Reference to competitive quotes",
+      "Sticking to a firm budget number"
+    ],
+    "seller_eagerness_level": 7,
+    "escalation_triggers": "None currently active.",
+    "buyer_power_index": 7.5,
+    "suggested_next_move": "Seller should hold firm on current price and emphasize unique feature value."
+  },
+  "Technical Artifacts": {
+    "thread_timestamps": [
+      "2025-10-01T10:00:00Z",
+      "2025-11-20T14:30:00Z"
+    ],
+    "relevant_attachments_context": "Pricing spreadsheet, Draft MSA, Technical Spec Sheet",
+    "extracted_ids": [
+      "DEAL-ID-9001",
+      "BUYER-REF-ACME-445"
+    ],
+    "thread_duration": "50 days",
+    "message_count_buyer": 18,
+    "message_count_seller": 22,
+    "avg_response_time_hours_seller": 4.5
+  },
+  "Summary": {
+    "summary": "The negotiation for the Enterprise Data Analytics Platform is in the final pricing phase. The seller has significantly dropped the price from $150k to $120k but the buyer is holding firm at $100k, citing a competitor quote of $110k. A critical deadline of Dec 15th for contract signature is approaching. The buyer has high leverage due to the competitive market."
+  },
+  "Negotiation Status & Health": {
+    "overall_deal_health_score": 85,
+    "deal_phase": "Closing/Price Finalization",
+    "offer_saturation_level": 80,
+    "remaining_price_wiggle_room_estimate": 5000.00,
+    "leverage_distribution": "Buyer leaning",
+    "leverage_reasoning": "Strong competitor offer and buyer's firm budget boundary.",
+    "stalemate_risk_probability": 25,
+    "walk_away_readiness": "Seller is moderately ready to walk away below $115k."
+  },
+  "Research-Backed Response Strategies": {
+    "market_context_summary": "The enterprise analytics market is highly competitive, with a trend toward value-based pricing rather than feature parity. Competitors are aggressively discounting for year-end deals.",
+    "strategies (list of StrategyOption objects)": [
+      {
+        "name": "Anchor on Value/ROI",
+        "description": "Stop discussing price. Re-quantify the ROI of the $120k offer, focusing on the unique HIPAA and advanced features that Competitor X lacks.",
+        "risk_level": "Medium",
+        "potential_gain": "High"
+      },
+      {
+        "name": "Split the Difference Compromise",
+        "description": "Offer a final price of $110,000, matching Competitor X's quote and claiming this as the absolute final offer.",
+        "risk_level": "Low",
+        "potential_gain": "Medium"
+      }
+    ],
+    "best_strategy_recommendation": "Anchor on Value/ROI. The seller is near the floor; further price drops risk eroding value perception."
+  },
+  "Base Classes": {
+    "Attachment.filename": [
+      "pricing_v3.xlsx",
+      "MSA_draft_v1.pdf",
+      "Tech_Specs.docx"
+    ],
+    "Attachment.file_type": [
+      "Spreadsheet",
+      "PDF",
+      "Document"
+    ],
+    "Attachment.local_path": [
+      "/deals/9001/pricing_v3.xlsx",
+      "/deals/9001/MSA_draft_v1.pdf",
+      "/deals/9001/Tech_Specs.docx"
+    ]
+  }
+}
